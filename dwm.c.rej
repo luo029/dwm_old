@@ -1,0 +1,13 @@
+--- dwm.c
++++ dwm.c
+@@ -309,7 +309,9 @@ applyrules(Client *c)
+ 		XFree(ch.res_class);
+ 	if (ch.res_name)
+ 		XFree(ch.res_name);
+-	c->tags = c->tags & TAGMASK ? c->tags & TAGMASK : c->mon->tagset[c->mon->seltags];
++	if(c->tags & TAGMASK)                    c->tags = c->tags & TAGMASK;
++	else if(c->mon->tagset[c->mon->seltags]) c->tags = c->mon->tagset[c->mon->seltags];
++	else                                     c->tags = 1;
+ }
+ 
+ int
